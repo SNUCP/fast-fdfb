@@ -11,7 +11,6 @@ import (
 // convertPolyToFourierPolyAssign converts and folds p to fpOut.
 func convertPolyToFourierPolyAssign[T num.Integer](p []T, fpOut []float64) {
 	N := len(p)
-
 	var z T
 	switch any(z).(type) {
 	case uint, uintptr:
@@ -63,6 +62,7 @@ func convertPolyToFourierPolyAssign[T num.Integer](p []T, fpOut []float64) {
 			fpOut[i+7] = float64(int32(p[ii+3+N/2]))
 		}
 	case uint64:
+		//fmt.Println("N: ", N)
 		for i, ii := 0, 0; i < N; i, ii = i+8, ii+4 {
 			fpOut[i+0] = float64(int64(p[ii+0]))
 			fpOut[i+1] = float64(int64(p[ii+1]))

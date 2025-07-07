@@ -104,12 +104,12 @@ func NewEvaluator[T TorusInt](params Parameters[T], evk EvaluationKey[T]) *Evalu
 }
 
 func NewEvaluatorHierarchy[T TorusInt](params Parameters[T], evk EvaluationKey[T], depth int) *Evaluator[T] {
-	decomposer := NewDecomposer[T](params.polyDegree)
+	polyDegree := params.polyDegree / int(math.Pow(2, float64(depth)))
+	decomposer := NewDecomposer[T](polyDegree)
 	decomposer.ScalarDecomposedBuffer(params.keySwitchParameters)
 	decomposer.PolyDecomposedBuffer(params.blindRotateParameters)
 	decomposer.PolyFourierDecomposedBuffer(params.blindRotateParameters)
 
-	polyDegree := params.polyDegree / int(math.Pow(2, float64(depth)))
 	lookupTableSize := params.lookUpTableSize / int(math.Pow(2, float64(depth)))
 	glweDimension := params.glweDimension / int(math.Pow(2, float64(depth)))
 	logPolyDegree := params.logPolyDegree - depth

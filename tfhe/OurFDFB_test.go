@@ -71,14 +71,13 @@ func Benchmark_OurFDFB(b *testing.B) {
 }
 
 func Example_ourFDFB() {
-	params := tfhe.Params5.Compile()
+	params := tfhe.Params6.Compile()
 	enc := tfhe.NewEncryptorHierarchyWithSharedLWEKey(params)
 	evaluators := make([]*tfhe.Evaluator[uint64], len(enc))
 
 	for depth := 0; depth < len(enc); depth++ {
 		evaluators[depth] = tfhe.NewEvaluatorHierarchy(params, enc[depth].GenEvaluationKeyParallel(), depth+1)
 	}
-
 	// baseEnc and baseEval are temporary encryptor and evaluator to generate and decompose LUT.
 	baseEnc := tfhe.NewEncryptor(params)
 	baseEval := tfhe.NewEvaluator(params, baseEnc.GenEvaluationKeyParallel())
@@ -97,7 +96,6 @@ func Example_ourFDFB() {
 	}
 	evaluators[len(evaluators)-1].BootstrapLUTWithMSconstAssign(ct, compressLUT, MSConst*2, ctCompress)
 	evaluators[len(evaluators)-1].AddLWEAssign(ctOut, evaluators[len(evaluators)-1].BootstrapLUT(ctCompress, decomposedlut[len(decomposedlut)-1]), ctOut)
-
 	fmt.Println(enc[0].DecryptLWE(ctOut))
 	// Output:
 	// 3
