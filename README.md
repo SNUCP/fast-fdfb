@@ -1,4 +1,4 @@
-Implementation of "Efficient Full Domain Functional Bootstrapping from Recursive LUT Decomposition"
+POC implementation of "Efficient Full Domain Functional Bootstrapping from Recursive LUT Decomposition"
 
 ## How To Install
 Use "go mod tidy"
